@@ -1,4 +1,3 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
@@ -13,7 +12,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Route for regular generation
+// Regular generation route
 app.post("/generate", async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -40,7 +39,7 @@ app.post("/generate", async (req, res) => {
   }
 });
 
-// Route for stream generation
+// Stream generation route
 app.post("/generate-stream", async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -62,7 +61,6 @@ app.post("/generate-stream", async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
