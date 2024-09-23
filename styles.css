@@ -72,9 +72,25 @@ button {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
+
 button:hover {
   background-color: #018786;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  background-color: #03dac6;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(3, 218, 198, 0.5);
 }
 
 label {
