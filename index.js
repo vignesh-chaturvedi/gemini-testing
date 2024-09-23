@@ -63,4 +63,34 @@ document.addEventListener("DOMContentLoaded", () => {
       output.textContent = "Failed to generate stream content";
     }
   });
+  document
+    .getElementById("generateImages")
+    .addEventListener("click", async () => {
+      const prompt = promptInput.value;
+      if (!prompt) return;
+
+      try {
+        const response = await fetch("/generate-images", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt }),
+        });
+
+        const data = await response.json();
+        const imageGrid = document.getElementById("image-grid");
+        imageGrid.innerHTML = ""; // Clear previous images
+
+        data.images.forEach((imgData, index) => {
+          const img = document.createElement("img");
+          img.src = imgData;
+          img.alt = `Generated image ${index + 1}`;
+          imageGrid.appendChild(img);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+        output.textContent = "Failed to generate images";
+      }
+    });
 });

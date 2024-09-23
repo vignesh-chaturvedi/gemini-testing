@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const https = require("https");
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(express.static(path.join(__dirname)));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+
+const maxImages = 1;
 
 // Regular generation route
 app.post("/generate", async (req, res) => {
@@ -58,6 +61,53 @@ app.post("/generate-stream", async (req, res) => {
   } catch (error) {
     console.error("Error with Gemini API (stream):", error);
     res.status(500).json({ error: "Failed to generate stream content" });
+  }
+});
+
+app.post("/generate-images", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const imageData = [];
+
+    for (let i = 0; i < maxImages; i++) {
+      const randomNumber = Math.floor(Math.random() * 10000 + 1);
+      const imageBuffer = await new Promise((resolve, reject) => {
+        const options = {
+          hostname: "api-inference.huggingface.co",
+          path: "/models/prompthero/openjourney",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          },
+        };
+
+        const req = https.request(options, (res) => {
+          let data = [];
+          res.on("data", (chunk) => {
+            data.push(chunk);
+          });
+          res.on("end", () => {
+            resolve(Buffer.concat(data));
+          });
+        });
+
+        req.on("error", (error) => {
+          reject(error);
+        });
+
+        req.write(JSON.stringify({ inputs: `${prompt} ${randomNumber}` }));
+        req.end();
+      });
+
+      const base64Image = imageBuffer.toString("base64");
+      imageData.push(`data:image/jpeg;base64,${base64Image}`);
+    }
+
+    res.json({ images: imageData });
+  } catch (error) {
+    console.error("Error generating images:", error);
+    res.status(500).json({ error: "Failed to generate images" });
   }
 });
 
