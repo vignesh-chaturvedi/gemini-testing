@@ -1,0 +1,74 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  color: #bb86fc;
+}
+.container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.output {
+  margin-top: 20px;
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+  padding: 15px;
+  border-radius: 5px;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  text-align: center;
+}
+button {
+  background-color: #03dac6;
+  color: #121212;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+button:hover {
+  background-color: #018786;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  box-sizing: border-box; /* Include padding and border in total width */
+  width: 100%; /* Full width of the container */
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #03dac6; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #1e1e1e; /* Input background */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* Font size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transition effects */
+}
+
+input[type="text"]:focus {
+  outline: none; /* Remove default outline */
+  border-color: #bb86fc; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(187, 134, 252, 0.5); /* Shadow effect */
+}
+
+input[type="text"]::placeholder {
+  color: #888; /* Placeholder text color */
+  opacity: 0.8; /* Placeholder opacity */
+}
